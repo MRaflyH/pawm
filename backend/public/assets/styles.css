@@ -1,49 +1,97 @@
+/* General Styles */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
     text-align: center;
     margin: 0;
     padding: 0;
+    background-color: #f4f4f9;
+    color: #333;
 }
 
-/* Navbar container */
+/* Navbar Styles */
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
-    background-color: #333;
+    padding: 15px 20px;
+    background: linear-gradient(90deg, #4a90e2, #1456a5);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     color: white;
 }
 
-/* Left-aligned section of the navbar */
-.navbar-left {
-    display: flex;
-    align-items: center;
+.navbar .nav-button {
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 5px;
+    transition: all 0.3s;
 }
 
-/* Right-aligned section of the navbar */
+.navbar .nav-button:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
 .navbar-right {
     display: flex;
     align-items: center;
     gap: 15px;
 }
 
-/* Navbar buttons */
-.nav-button {
+/* Form Container */
+#login-container, #signup-container {
+    margin: 20px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+}
+
+input[type="email"], input[type="password"] {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    padding: 10px 20px;
+    background: #4a90e2;
     color: white;
-    text-decoration: none;
-    padding: 8px 15px;
-    background-color: #555;
     border: none;
     border-radius: 5px;
-    transition: background-color 0.3s;
+    cursor: pointer;
+    transition: all 0.3s;
 }
 
-.nav-button:hover {
-    background-color: #777;
+button:hover {
+    background: #357abd;
 }
 
-/* Hide buttons if necessary */
-#logoutNav {
-    display: none; /* Shown dynamically with JavaScript */
+/* Dashboard Content */
+.subject-frame {
+    margin: 20px;
+    padding: 15px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+    width: calc(45% - 40px);
+    box-sizing: border-box;
+}
+
+.subject-frame h2 {
+    margin: 0 0 10px;
+    color: #1456a5;
+}
+
+.subject-frame p {
+    margin: 0 0 15px;
+}
+
+.subject-frame button {
+    margin: 5px;
 }
