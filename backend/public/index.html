@@ -22,7 +22,7 @@
 
         // Define subjects
         const subjects = [
-            { id: "phQuiz", title: "pH", quizLink: "/quizzes/ph-quiz", labLink: "#" },
+            { id: "phQuiz", title: "pH", quizLink: "/quizzes/ph-quiz", labLink: "/labs/ph-lab.html" },
             { id: "colorMixingQuiz", title: "Color Mixing", quizLink: "/quizzes/color-mixing-quiz", labLink: "#" }
         ];
 
@@ -53,7 +53,7 @@
                         <h2>Subject: ${subject.title}</h2>
                         <p>Current Score: ${score}</p>
                         <button onclick="window.location.href='${subject.quizLink}'">Take Quiz</button>
-                        <button>Access Lab</button>
+                        <button onclick="window.location.href='${subject.labLink}'">Access Lab</button>
                     </div>
                 `;
             });
