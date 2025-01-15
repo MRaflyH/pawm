@@ -28,7 +28,7 @@ const auth = getAuth(app);
 function updateNavbar(user) {
     const loginNav = document.querySelector("#loginNav");
     const signupNav = document.querySelector("#signupNav");
-    const logoutNav = document.querySelector("#logoutNav");
+    const logoutNav = document.querySelector("#logoutBtn");
 
     if (user) {
         // User is logged in
