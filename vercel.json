@@ -1,8 +1,9 @@
 {
-    "rewrites": [
-      { "source": "/login", "destination": "/backend/public/login.html" },
-      { "source": "/signup", "destination": "/backend/public/signup.html" },
-      { "source": "/", "destination": "/backend/public/index.html" }
-    ],
-    "cleanUrls": true
+  "rewrites": [
+    { "source": "/login", "destination": "/backend/public/login.html" },
+    { "source": "/signup", "destination": "/backend/public/signup.html" },
+    { "source": "/", "destination": "/backend/public/index.html" },
+    { "source": "/navbar.html", "destination": "/backend/public/navbar.html" }
+  ],
+  "cleanUrls": true
 }
