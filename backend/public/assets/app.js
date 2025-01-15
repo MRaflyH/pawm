@@ -1,3 +1,5 @@
+console.log("app.js loaded!");
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
 import { 
     getAuth, 
@@ -150,8 +152,10 @@ document.addEventListener("click", (event) => {
 // Handle Quiz Submission (Generic for Multiple Quizzes)
 document.addEventListener("click", async (event) => {
     if (event.target.classList.contains("submit-quiz")) {
+        console.log("Submit button clicked!");
         const quizId = event.target.dataset.quizId; // e.g., "phQuiz", "biologyQuiz"
         const user = auth.currentUser;
+        console.log("Quiz ID:", quizId);
 
         if (!user) {
             alert("You need to be logged in to submit the quiz.");
@@ -175,6 +179,11 @@ document.addEventListener("click", async (event) => {
 
         // Get user answers and calculate score
         const form = document.querySelector(`#quiz-form-${quizId}`);
+        console.log("Form Element:", form);
+        if (!form) {
+            console.error(`Form with ID quiz-form-${quizId} not found!`);
+            return;
+        }
         let score = 0;
         Object.keys(correctAnswers).forEach((questionId) => {
             const userAnswer = form.querySelector(`input[name="${questionId}"]:checked`);

@@ -11,7 +11,7 @@
     <div id="navbar"></div> <!-- Add this navbar placeholder -->
     <div id="quiz-container">
         <h1>pH Quiz</h1>
-        <form id="quiz-form">
+        <form id="quiz-form-phQuiz">
             <div class="question" id="question1">
                 <p>1. What does a pH of 7 represent?</p>
                 <input type="radio" name="q1" value="A"> A) Acidic<br>
@@ -82,9 +82,9 @@
                 <input type="radio" name="q10" value="C"> C) 9<br>
                 <input type="radio" name="q10" value="D"> D) 12<br>
             </div>
-            <button type="button" id="submit-quiz">Submit</button>
+            <button type="button" class="submit-quiz" data-quiz-id="phQuiz">Submit</button>
         </form>
     </div>
-    <script type="module" src="../assets/app.js"></script>
+    <script type="module" defer src="../assets/app.js"></script>
 </body>
 </html>
