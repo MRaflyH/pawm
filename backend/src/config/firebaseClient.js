@@ -1,19 +1,21 @@
+const { initializeApp } = require('firebase/app');
+const { getAuth } = require('firebase/auth');
+const { getFirestore } = require('firebase/firestore');
 require('dotenv').config();
+console.log(process.env.FIREBASE_API_KEY); // Should log your API key
 
 const firebaseConfig = {
-    apiKey: process.env.FIREBASE_API_KEY,
-    authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-    projectId: process.env.FIREBASE_PROJECT_ID,
-    storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
-    messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
-    appId: process.env.FIREBASE_APP_ID,
+    apiKey: "AIzaSyBEgLqb88cS8W5GY7ML6fp_e31YXS82wK0",
+    authDomain: "pawm-1762c.firebaseapp.com",
+    projectId: "pawm-1762c",
+    storageBucket: "pawm-1762c.firebasestorage.app",
+    messagingSenderId: "1085651467496",
+    appId: "1:1085651467496:web:9aee1ae66245a05e3c9d5d",
+    measurementId: "G-W24VGS7LDT"
 };
 
-// Firebase Client SDK
-const firebase = require('firebase/app');
-require('firebase/auth'); // Include Authentication
-require('firebase/firestore'); // Include Firestore
+const firebaseApp = initializeApp(firebaseConfig);
+const auth = getAuth(firebaseApp);
+const db = getFirestore(firebaseApp);
 
-firebase.initializeApp(firebaseConfig);
-
-module.exports = firebase;
+module.exports = { firebaseApp, auth, db };
