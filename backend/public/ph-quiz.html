@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pH Basics Quiz</title>
+    <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+    <div id="quizContainer">
+        <h2>pH Basics Quiz</h2>
+        <form id="phQuizForm">
+            <div class="question">
+                <p>1. What is the pH of pure water?</p>
+                <label><input type="radio" name="q1" value="5"> 5</label>
+                <label><input type="radio" name="q1" value="7"> 7</label>
+                <label><input type="radio" name="q1" value="9"> 9</label>
+            </div>
+            <div class="question">
+                <p>2. Which pH level indicates a strong acid?</p>
+                <label><input type="radio" name="q2" value="3"> 3</label>
+                <label><input type="radio" name="q2" value="7"> 7</label>
+                <label><input type="radio" name="q2" value="11"> 11</label>
+            </div>
+            <button type="button" id="submitPhQuiz">Submit</button>
+        </form>
+        <p id="phScoreDisplay"></p>
+    </div>
+    <script src="assets/ph-quiz.js" type="module"></script>
+</body>
+</html>
