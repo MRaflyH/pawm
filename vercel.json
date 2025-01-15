@@ -4,6 +4,6 @@
     { "source": "/login", "destination": "/public/login.html" },
     { "source": "/signup", "destination": "/public/signup.html" },
     { "source": "/", "destination": "/public/index.html" },
-    { "source": "/navbar.html", "destination": "/public/navbar.html" }
+    { "source": "/navbar", "destination": "/public/navbar.html" }
   ]
 }
