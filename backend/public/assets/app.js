@@ -7,6 +7,8 @@ import {
     onAuthStateChanged 
 } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
 
+const navbarPath = window.location.hostname === "localhost" ? "/navbar.html" : "/navbar";
+
 // Firebase Configuration
 const firebaseConfig = {
     apiKey: "AIzaSyBEgLqb88cS8W5GY7ML6fp_e31YXS82wK0",
@@ -42,7 +44,7 @@ function updateNavbar(user) {
 }
 
 // Fetch and load the navbar
-fetch('/navbar') // Adjusted path for both local and Vercel
+fetch(navbarPath) // Adjusted path for both local and Vercel
     .then(response => {
         if (!response.ok) throw new Error(`Failed to fetch navbar: ${response.statusText}`);
         return response.text();
