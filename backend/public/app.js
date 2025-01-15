@@ -1,13 +1,15 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
+import { getAnalytics } from "firebase/analytics";
 
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_AUTH_DOMAIN",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_STORAGE_BUCKET",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyBEgLqb88cS8W5GY7ML6fp_e31YXS82wK0",
+  authDomain: "pawm-1762c.firebaseapp.com",
+  projectId: "pawm-1762c",
+  storageBucket: "pawm-1762c.firebasestorage.app",
+  messagingSenderId: "1085651467496",
+  appId: "1:1085651467496:web:9aee1ae66245a05e3c9d5d",
+  measurementId: "G-W24VGS7LDT"
 };
 
 const app = initializeApp(firebaseConfig);
