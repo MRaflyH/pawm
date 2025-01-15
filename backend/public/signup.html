@@ -3,12 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Sign Up</title>
     <link rel="stylesheet" href="/assets/styles.css">
 </head>
 <body>
-    <h1>Welcome to the Dashboard</h1>
+    <!-- Navigation Bar -->
     <div id="navbar"></div>
+
+    <h1>Sign Up</h1>
+    <div id="signup-container">
+        <input type="email" id="signup-email" placeholder="Email">
+        <input type="password" id="signup-password" placeholder="Password">
+        <button id="signupSubmitBtn">Sign Up</button>
+    </div>
+    <p>Already have an account? <a href="/login">Login</a></p>
 
     <script>
         // Load the Navbar
