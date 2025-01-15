@@ -18,14 +18,39 @@ const firebaseConfig = {
     measurementId: "G-W24VGS7LDT"
 };
 
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+
+// Utility function to update navbar state
+function updateNavbar(user) {
+    const loginNav = document.querySelector("#loginNav");
+    const signupNav = document.querySelector("#signupNav");
+    const logoutNav = document.querySelector("#logoutNav");
+
+    if (user) {
+        // User is logged in
+        if (loginNav) loginNav.style.display = "none";
+        if (signupNav) signupNav.style.display = "none";
+        if (logoutNav) logoutNav.style.display = "block";
+    } else {
+        // User is logged out
+        if (loginNav) loginNav.style.display = "block";
+        if (signupNav) signupNav.style.display = "block";
+        if (logoutNav) logoutNav.style.display = "none";
+    }
+}
 
 // Handle Login
 if (document.querySelector("#loginSubmitBtn")) {
     document.querySelector("#loginSubmitBtn").addEventListener("click", () => {
-        const email = document.querySelector("#login-email").value;
-        const password = document.querySelector("#login-password").value;
+        const email = document.querySelector("#login-email").value.trim();
+        const password = document.querySelector("#login-password").value.trim();
+
+        if (!email || !password) {
+            alert("Please enter both email and password.");
+            return;
+        }
 
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
@@ -43,8 +68,13 @@ if (document.querySelector("#loginSubmitBtn")) {
 // Handle Sign-Up
 if (document.querySelector("#signupSubmitBtn")) {
     document.querySelector("#signupSubmitBtn").addEventListener("click", () => {
-        const email = document.querySelector("#signup-email").value;
-        const password = document.querySelector("#signup-password").value;
+        const email = document.querySelector("#signup-email").value.trim();
+        const password = document.querySelector("#signup-password").value.trim();
+
+        if (!email || !password) {
+            alert("Please enter both email and password.");
+            return;
+        }
 
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
@@ -59,23 +89,9 @@ if (document.querySelector("#signupSubmitBtn")) {
     });
 }
 
-// Auth State Listener for Navbar
+// Listen for authentication state changes and update the navbar
 onAuthStateChanged(auth, (user) => {
-    const loginNav = document.querySelector("#loginNav");
-    const signupNav = document.querySelector("#signupNav");
-    const logoutNav = document.querySelector("#logoutNav");
-
-    if (user) {
-        // User is logged in
-        if (loginNav) loginNav.style.display = "none";
-        if (signupNav) signupNav.style.display = "none";
-        if (logoutNav) logoutNav.style.display = "block";
-    } else {
-        // User is logged out
-        if (loginNav) loginNav.style.display = "block";
-        if (signupNav) signupNav.style.display = "block";
-        if (logoutNav) logoutNav.style.display = "none";
-    }
+    updateNavbar(user);
 });
 
 // Handle Logout
