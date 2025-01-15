@@ -1,9 +1,7 @@
 {
     "rewrites": [
-      { "source": "/navbar.html", "destination": "/backend/public/navbar.html" },
       { "source": "/login", "destination": "/backend/public/login.html" },
       { "source": "/signup", "destination": "/backend/public/signup.html" },
       { "source": "/", "destination": "/backend/public/index.html" }
     ]
-  }
-  
+}
