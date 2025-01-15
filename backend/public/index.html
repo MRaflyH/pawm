@@ -3,11 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <title>Frontend</title>
+    <title>Authentication</title>
 </head>
 <body>
-    <h1>Hello from Frontend!</h1>
-    <script src="app.js"></script>
+    <h1>Firebase Authentication</h1>
+
+    <!-- Login Form -->
+    <div id="login-container">
+        <h2>Login</h2>
+        <input type="email" id="login-email" placeholder="Email">
+        <input type="password" id="login-password" placeholder="Password">
+        <button id="loginBtn">Login</button>
+        <p>Don't have an account? <button id="showSignUp">Sign up</button></p>
+    </div>
+
+    <!-- Sign-Up Form -->
+    <div id="signup-container" style="display: none;">
+        <h2>Sign Up</h2>
+        <input type="email" id="signup-email" placeholder="Email">
+        <input type="password" id="signup-password" placeholder="Password">
+        <button id="signupBtn">Sign Up</button>
+        <p>Already have an account? <button id="showLogin">Login</button></p>
+    </div>
+
+    <!-- Logout Button -->
+    <div id="logout-container" style="display: none;">
+        <h2>Welcome!</h2>
+        <button id="logoutBtn">Logout</button>
+    </div>
+
+    <script type="module" src="app.js"></script>
 </body>
 </html>
