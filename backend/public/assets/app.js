@@ -42,7 +42,7 @@ function updateNavbar(user) {
 }
 
 // Fetch and load the navbar
-fetch('/navbar.html') // Adjusted path for both local and Vercel
+fetch('/navbar.html') // Fetch directly from the root since /public is the public folder
     .then(response => {
         if (!response.ok) throw new Error(`Failed to fetch navbar: ${response.statusText}`);
         return response.text();
@@ -50,9 +50,21 @@ fetch('/navbar.html') // Adjusted path for both local and Vercel
     .then(html => {
         document.querySelector('#navbar').innerHTML = html;
 
-        // Update navbar after it loads
+        // Handle authentication state after navbar loads
         onAuthStateChanged(auth, (user) => {
-            updateNavbar(user);
+            const loginNav = document.querySelector("#loginNav");
+            const signupNav = document.querySelector("#signupNav");
+            const logoutNav = document.querySelector("#logoutNav");
+
+            if (user) {
+                if (loginNav) loginNav.style.display = "none";
+                if (signupNav) signupNav.style.display = "none";
+                if (logoutNav) logoutNav.style.display = "block";
+            } else {
+                if (loginNav) loginNav.style.display = "block";
+                if (signupNav) signupNav.style.display = "block";
+                if (logoutNav) logoutNav.style.display = "none";
+            }
         });
     })
     .catch(error => console.error("Error loading navbar:", error));
