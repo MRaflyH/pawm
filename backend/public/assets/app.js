@@ -22,7 +22,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// Utility function to update navbar based on auth state
+// Utility function to update the navbar
 function updateNavbar(user) {
     const loginNav = document.querySelector("#loginNav");
     const signupNav = document.querySelector("#signupNav");
@@ -41,7 +41,7 @@ function updateNavbar(user) {
     }
 }
 
-// Fetch and Load Navbar
+// Fetch and load the navbar
 fetch('/backend/public/navbar.html')
     .then(response => {
         if (!response.ok) throw new Error(`Failed to fetch navbar: ${response.statusText}`);
@@ -50,14 +50,14 @@ fetch('/backend/public/navbar.html')
     .then(html => {
         document.querySelector('#navbar').innerHTML = html;
 
-        // Initialize Auth State Listener after Navbar Loads
+        // Update the navbar after it loads
         onAuthStateChanged(auth, (user) => {
             updateNavbar(user);
         });
     })
     .catch(error => console.error("Error loading navbar:", error));
 
-// Handle Login
+// Handle login
 if (document.querySelector("#loginSubmitBtn")) {
     document.querySelector("#loginSubmitBtn").addEventListener("click", () => {
         const email = document.querySelector("#login-email").value.trim();
@@ -69,9 +69,9 @@ if (document.querySelector("#loginSubmitBtn")) {
         }
 
         signInWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
+            .then(() => {
                 alert("Login successful!");
-                window.location.href = "/"; // Redirect to dashboard
+                window.location.href = "/";
             })
             .catch((error) => {
                 alert(`Login failed: ${error.message}`);
@@ -80,7 +80,7 @@ if (document.querySelector("#loginSubmitBtn")) {
     });
 }
 
-// Handle Sign-Up
+// Handle sign-up
 if (document.querySelector("#signupSubmitBtn")) {
     document.querySelector("#signupSubmitBtn").addEventListener("click", () => {
         const email = document.querySelector("#signup-email").value.trim();
@@ -92,9 +92,9 @@ if (document.querySelector("#signupSubmitBtn")) {
         }
 
         createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
+            .then(() => {
                 alert("Sign-Up successful! Redirecting to dashboard...");
-                window.location.href = "/"; // Redirect to dashboard after sign-up
+                window.location.href = "/";
             })
             .catch((error) => {
                 alert(`Sign-Up failed: ${error.message}`);
@@ -103,13 +103,13 @@ if (document.querySelector("#signupSubmitBtn")) {
     });
 }
 
-// Handle Logout
+// Handle logout
 document.addEventListener("click", (event) => {
     if (event.target.id === "logoutBtn") {
         signOut(auth)
             .then(() => {
                 alert("You have been logged out.");
-                window.location.href = "/"; // Redirect to the dashboard
+                window.location.href = "/";
             })
             .catch((error) => {
                 alert(`Logout failed: ${error.message}`);
