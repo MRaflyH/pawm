@@ -42,7 +42,7 @@ function updateNavbar(user) {
 }
 
 // Fetch and load the navbar
-fetch('/navbar.html') // Adjusted path for both local and Vercel
+fetch('/navbar') // Adjusted path for both local and Vercel
     .then(response => {
         if (!response.ok) throw new Error(`Failed to fetch navbar: ${response.statusText}`);
         return response.text();
