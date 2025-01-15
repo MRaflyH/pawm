@@ -7,6 +7,8 @@ import {
     onAuthStateChanged 
 } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
 
+import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+
 const navbarPath = window.location.hostname === "localhost" ? "/navbar.html" : "/navbar";
 
 // Firebase Configuration
@@ -23,6 +25,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app);
 
 // Utility function to update the navbar
 function updateNavbar(user) {
@@ -44,7 +47,7 @@ function updateNavbar(user) {
 }
 
 // Fetch and load the navbar
-fetch(navbarPath) // Adjusted path for both local and Vercel
+fetch(navbarPath)
     .then(response => {
         if (!response.ok) throw new Error(`Failed to fetch navbar: ${response.statusText}`);
         return response.text();
@@ -71,7 +74,19 @@ if (document.querySelector("#loginSubmitBtn")) {
         }
 
         signInWithEmailAndPassword(auth, email, password)
-            .then(() => {
+            .then(async (userCredential) => {
+                const user = userCredential.user;
+
+                // Save last login timestamp to Firestore
+                try {
+                    await setDoc(doc(db, "users", user.uid), {
+                        lastLogin: serverTimestamp()
+                    }, { merge: true }); // Merge with existing data
+                    console.log("Last login timestamp updated.");
+                } catch (error) {
+                    console.error("Error updating last login timestamp:", error);
+                }
+
                 alert("Login successful!");
                 window.location.href = "/";
             })
@@ -94,7 +109,19 @@ if (document.querySelector("#signupSubmitBtn")) {
         }
 
         createUserWithEmailAndPassword(auth, email, password)
-            .then(() => {
+            .then(async (userCredential) => {
+                const user = userCredential.user;
+
+                // Save last login timestamp to Firestore
+                try {
+                    await setDoc(doc(db, "users", user.uid), {
+                        lastLogin: serverTimestamp()
+                    }, { merge: true }); // Merge with existing data
+                    console.log("Last login timestamp updated for new user.");
+                } catch (error) {
+                    console.error("Error updating last login timestamp for new user:", error);
+                }
+
                 alert("Sign-Up successful! Redirecting to dashboard...");
                 window.location.href = "/";
             })
@@ -117,5 +144,67 @@ document.addEventListener("click", (event) => {
                 alert(`Logout failed: ${error.message}`);
                 console.error("Logout error:", error);
             });
+    }
+});
+
+// Handle Quiz Submission (Generic for Multiple Quizzes)
+document.addEventListener("click", async (event) => {
+    if (event.target.classList.contains("submit-quiz")) {
+        const quizId = event.target.dataset.quizId; // e.g., "phQuiz", "biologyQuiz"
+        const user = auth.currentUser;
+
+        if (!user) {
+            alert("You need to be logged in to submit the quiz.");
+            return;
+        }
+
+        // Define correct answers for each quiz
+        const quizAnswers = {
+            phQuiz: {
+                q1: "B", q2: "A", q3: "B", q4: "D", q5: "B",
+                q6: "A", q7: "A", q8: "C", q9: "B", q10: "C",
+            },
+            // Add more quizzes here, e.g., biologyQuiz: { q1: "A", q2: "C", ... }
+        };
+
+        const correctAnswers = quizAnswers[quizId];
+        if (!correctAnswers) {
+            alert("Invalid quiz submission.");
+            return;
+        }
+
+        // Get user answers and calculate score
+        const form = document.querySelector(`#quiz-form-${quizId}`);
+        let score = 0;
+        Object.keys(correctAnswers).forEach((questionId) => {
+            const userAnswer = form.querySelector(`input[name="${questionId}"]:checked`);
+            if (userAnswer && userAnswer.value === correctAnswers[questionId]) {
+                score++;
+            }
+        });
+
+        const totalQuestions = Object.keys(correctAnswers).length;
+        const percentageScore = Math.round((score / totalQuestions) * 100);
+
+        // Save score to Firestore
+        try {
+            await setDoc(
+                doc(db, "users", user.uid),
+                {
+                    quizScores: {
+                        [quizId]: {
+                            score: percentageScore,
+                            submittedAt: serverTimestamp(),
+                        },
+                    },
+                },
+                { merge: true }
+            );
+            alert(`Quiz submitted! Your score: ${percentageScore}%`);
+            window.location.href = "/"; // Redirect to dashboard or another page
+        } catch (error) {
+            console.error("Error saving quiz score:", error);
+            alert("There was an error submitting your quiz. Please try again.");
+        }
     }
 });
