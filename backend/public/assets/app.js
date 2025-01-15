@@ -42,7 +42,7 @@ function updateNavbar(user) {
 }
 
 // Fetch and load the navbar
-fetch('/backend/public/navbar.html')
+fetch('/navbar.html') // Adjusted path for both local and Vercel
     .then(response => {
         if (!response.ok) throw new Error(`Failed to fetch navbar: ${response.statusText}`);
         return response.text();
@@ -50,7 +50,7 @@ fetch('/backend/public/navbar.html')
     .then(html => {
         document.querySelector('#navbar').innerHTML = html;
 
-        // Update the navbar after it loads
+        // Update navbar after it loads
         onAuthStateChanged(auth, (user) => {
             updateNavbar(user);
         });
