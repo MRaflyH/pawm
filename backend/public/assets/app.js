@@ -168,6 +168,18 @@ document.addEventListener("click", async (event) => {
                 q1: "B", q2: "A", q3: "B", q4: "D", q5: "B",
                 q6: "A", q7: "A", q8: "C", q9: "B", q10: "C",
             },
+            colorMixingQuiz: {
+                q1: "B", // Red + Blue = Purple
+                q2: "A", // Primary Colors: Red, Yellow, Blue
+                q3: "A", // Yellow + Blue = Green
+                q4: "C", // Yellow + Red = Orange
+                q5: "B", // All primary colors = Black
+                q6: "D", // Yellow is a primary color, not secondary
+                q7: "A", // Adding white creates a tint
+                q8: "A", // Red + Green = Yellow
+                q9: "A", // Red and Green are complementary
+                q10: "B", // Adding black creates a shade
+            },        
             // Add more quizzes here, e.g., biologyQuiz: { q1: "A", q2: "C", ... }
         };
 
@@ -217,3 +229,5 @@ document.addEventListener("click", async (event) => {
         }
     }
 });
+
+export { auth, db };

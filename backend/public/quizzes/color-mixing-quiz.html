@@ -1,0 +1,89 @@
+<!-- color-mixing-quiz.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Mixing Quiz</title>
+    <link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+    <div id="quiz-container">
+        <h1>Color Mixing Quiz</h1>
+        <form id="quiz-form-colorMixingQuiz">
+            <div class="question" id="question1">
+                <p>1. What color do you get when you mix red and blue?</p>
+                <input type="radio" name="q1" value="A"> A) Green<br>
+                <input type="radio" name="q1" value="B"> B) Purple<br>
+                <input type="radio" name="q1" value="C"> C) Orange<br>
+                <input type="radio" name="q1" value="D"> D) Yellow<br>
+            </div>
+            <div class="question" id="question2">
+                <p>2. What are the primary colors?</p>
+                <input type="radio" name="q2" value="A"> A) Red, Yellow, Blue<br>
+                <input type="radio" name="q2" value="B"> B) Red, Green, Blue<br>
+                <input type="radio" name="q2" value="C"> C) Yellow, Green, Purple<br>
+                <input type="radio" name="q2" value="D"> D) Orange, Green, Purple<br>
+            </div>
+            <div class="question" id="question3">
+                <p>3. What color is created when you mix yellow and blue?</p>
+                <input type="radio" name="q3" value="A"> A) Green<br>
+                <input type="radio" name="q3" value="B"> B) Purple<br>
+                <input type="radio" name="q3" value="C"> C) Red<br>
+                <input type="radio" name="q3" value="D"> D) Orange<br>
+            </div>
+            <div class="question" id="question4">
+                <p>4. What color is created when you mix yellow and red?</p>
+                <input type="radio" name="q4" value="A"> A) Green<br>
+                <input type="radio" name="q4" value="B"> B) Purple<br>
+                <input type="radio" name="q4" value="C"> C) Orange<br>
+                <input type="radio" name="q4" value="D"> D) Blue<br>
+            </div>
+            <div class="question" id="question5">
+                <p>5. What do you get when you mix all three primary colors in equal amounts?</p>
+                <input type="radio" name="q5" value="A"> A) White<br>
+                <input type="radio" name="q5" value="B"> B) Black<br>
+                <input type="radio" name="q5" value="C"> C) Brown<br>
+                <input type="radio" name="q5" value="D"> D) Grey<br>
+            </div>
+            <div class="question" id="question6">
+                <p>6. Which of these is not a secondary color?</p>
+                <input type="radio" name="q6" value="A"> A) Purple<br>
+                <input type="radio" name="q6" value="B"> B) Green<br>
+                <input type="radio" name="q6" value="C"> C) Orange<br>
+                <input type="radio" name="q6" value="D"> D) Yellow<br>
+            </div>
+            <div class="question" id="question7">
+                <p>7. What happens when you mix white with any color?</p>
+                <input type="radio" name="q7" value="A"> A) It becomes lighter (tint)<br>
+                <input type="radio" name="q7" value="B"> B) It becomes darker (shade)<br>
+                <input type="radio" name="q7" value="C"> C) It turns grey<br>
+                <input type="radio" name="q7" value="D"> D) It doesn't change<br>
+            </div>
+            <div class="question" id="question8">
+                <p>8. What is the result of mixing red and green?</p>
+                <input type="radio" name="q8" value="A"> A) Yellow<br>
+                <input type="radio" name="q8" value="B"> B) Purple<br>
+                <input type="radio" name="q8" value="C"> C) Blue<br>
+                <input type="radio" name="q8" value="D"> D) Orange<br>
+            </div>
+            <div class="question" id="question9">
+                <p>9. Which colors are complementary (opposites on the color wheel)?</p>
+                <input type="radio" name="q9" value="A"> A) Red and Green<br>
+                <input type="radio" name="q9" value="B"> B) Blue and Purple<br>
+                <input type="radio" name="q9" value="C"> C) Yellow and Orange<br>
+                <input type="radio" name="q9" value="D"> D) Green and Blue<br>
+            </div>
+            <div class="question" id="question10">
+                <p>10. What do you call a color mixed with black?</p>
+                <input type="radio" name="q10" value="A"> A) Tint<br>
+                <input type="radio" name="q10" value="B"> B) Shade<br>
+                <input type="radio" name="q10" value="C"> C) Tone<br>
+                <input type="radio" name="q10" value="D"> D) Complement<br>
+            </div>
+            <button type="button" class="submit-quiz" data-quiz-id="colorMixingQuiz">Submit</button>
+        </form>
+    </div>
+    <script type="module" src="../assets/app.js"></script>
+</body>
+</html>

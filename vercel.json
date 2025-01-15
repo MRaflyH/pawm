@@ -1,9 +1,10 @@
 {
   "cleanUrls": true,
   "rewrites": [
-    { "source": "/login", "destination": "/public/login.html" },
-    { "source": "/signup", "destination": "/public/signup.html" },
-    { "source": "/", "destination": "/public/index.html" },
-    { "source": "/navbar", "destination": "/public/navbar.html" }
+    { "source": "/login", "destination": "/login.html" },
+    { "source": "/signup", "destination": "/signup.html" },
+    { "source": "/", "destination": "/index.html" },
+    { "source": "/navbar", "destination": "/navbar.html" },
+    { "source": "/quizzes/:quizName", "destination": "/quizzes/:quizName.html" }
   ]
 }

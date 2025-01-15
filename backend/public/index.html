@@ -8,14 +8,61 @@
 </head>
 <body>
     <div id="navbar"></div>
-    <h1>Welcome to the Dashboard</h1>
+    <h1>Dashboard</h1>
 
-    <script>
-        // Load the Navbar
-        fetch('/navbar.html')
-            .then(response => response.text())
-            .then(html => document.querySelector('#navbar').innerHTML = html);
-    </script>
+    <div id="content">
+        <!-- Content will be dynamically loaded here -->
+    </div>
+
     <script type="module" src="/assets/app.js"></script>
+    <script type="module">
+        import { auth, db } from '/assets/app.js';
+        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
+        import { doc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+
+        // Define subjects
+        const subjects = [
+            { id: "phQuiz", title: "pH", quizLink: "/quizzes/ph-quiz", labLink: "#" },
+            { id: "colorMixingQuiz", title: "Color Mixing", quizLink: "/quizzes/color-mixing-quiz", labLink: "#" }
+        ];
+
+        // Function to load the dashboard
+        async function loadDashboard(user) {
+            const contentDiv = document.querySelector("#content");
+            contentDiv.innerHTML = ""; // Clear existing content
+
+            if (!user) {
+                // Show login suggestion
+                contentDiv.innerHTML = `
+                    <p>Please <a href="/login.html">log in</a> to view your dashboard.</p>
+                `;
+                return;
+            }
+
+            // Fetch user data from Firestore
+            const userDocRef = doc(db, "users", user.uid);
+            const userDoc = await getDoc(userDocRef);
+            const scores = userDoc.exists() ? userDoc.data().quizScores || {} : {};
+
+            // Generate subject frames
+            subjects.forEach(subject => {
+                const score = scores[subject.id]?.score ? `${scores[subject.id].score}%` : "N/A";
+
+                contentDiv.innerHTML += `
+                    <div class="subject-frame">
+                        <h2>Subject: ${subject.title}</h2>
+                        <p>Current Score: ${score}</p>
+                        <button onclick="window.location.href='${subject.quizLink}'">Take Quiz</button>
+                        <button>Access Lab</button>
+                    </div>
+                `;
+            });
+        }
+
+        // Listen to auth state changes
+        onAuthStateChanged(auth, (user) => {
+            loadDashboard(user);
+        });
+    </script>
 </body>
 </html>
