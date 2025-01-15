@@ -22,7 +22,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// Utility function to update navbar state
+// Utility function to update navbar based on auth state
 function updateNavbar(user) {
     const loginNav = document.querySelector("#loginNav");
     const signupNav = document.querySelector("#signupNav");
@@ -41,6 +41,22 @@ function updateNavbar(user) {
     }
 }
 
+// Fetch and Load Navbar
+fetch('/backend/public/navbar.html')
+    .then(response => {
+        if (!response.ok) throw new Error(`Failed to fetch navbar: ${response.statusText}`);
+        return response.text();
+    })
+    .then(html => {
+        document.querySelector('#navbar').innerHTML = html;
+
+        // Initialize Auth State Listener after Navbar Loads
+        onAuthStateChanged(auth, (user) => {
+            updateNavbar(user);
+        });
+    })
+    .catch(error => console.error("Error loading navbar:", error));
+
 // Handle Login
 if (document.querySelector("#loginSubmitBtn")) {
     document.querySelector("#loginSubmitBtn").addEventListener("click", () => {
@@ -54,13 +70,12 @@ if (document.querySelector("#loginSubmitBtn")) {
 
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
-                console.log("User logged in:", userCredential.user);
                 alert("Login successful!");
                 window.location.href = "/"; // Redirect to dashboard
             })
             .catch((error) => {
-                console.error("Login error:", error.message);
-                alert("Login failed: " + error.message);
+                alert(`Login failed: ${error.message}`);
+                console.error("Login error:", error);
             });
     });
 }
@@ -78,34 +93,27 @@ if (document.querySelector("#signupSubmitBtn")) {
 
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
-                console.log("User signed up and logged in:", userCredential.user);
                 alert("Sign-Up successful! Redirecting to dashboard...");
                 window.location.href = "/"; // Redirect to dashboard after sign-up
             })
             .catch((error) => {
-                console.error("Sign-Up error:", error.message);
-                alert("Sign-Up failed: " + error.message);
+                alert(`Sign-Up failed: ${error.message}`);
+                console.error("Sign-Up error:", error);
             });
     });
 }
-
-// Listen for authentication state changes and update the navbar
-onAuthStateChanged(auth, (user) => {
-    updateNavbar(user);
-});
 
 // Handle Logout
 document.addEventListener("click", (event) => {
     if (event.target.id === "logoutBtn") {
         signOut(auth)
             .then(() => {
-                console.log("User logged out.");
                 alert("You have been logged out.");
                 window.location.href = "/"; // Redirect to the dashboard
             })
             .catch((error) => {
-                console.error("Error logging out:", error.message);
-                alert("Logout failed: " + error.message);
+                alert(`Logout failed: ${error.message}`);
+                console.error("Logout error:", error);
             });
     }
 });

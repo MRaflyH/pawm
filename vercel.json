@@ -2,7 +2,8 @@
     "rewrites": [
         { "source": "/api/(.*)", "destination": "/src/server.js" },
         { "source": "/(.*)", "destination": "/public/index.html" },
-        { "source": "/login", "destination": "/public/login.html" },
-        { "source": "/signup", "destination": "/public/signup.html" }        
+        { "source": "/login", "destination": "/backend/public/login.html" },
+        { "source": "/signup", "destination": "/backend/public/signup.html" },
+        { "source": "/", "destination": "/backend/public/index.html" }
     ]
 }
