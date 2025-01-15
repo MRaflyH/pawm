@@ -1,5 +1,12 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
+import { 
+    getAuth, 
+    signInWithEmailAndPassword, 
+    createUserWithEmailAndPassword, 
+    signOut, 
+    onAuthStateChanged 
+} from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyBEgLqb88cS8W5GY7ML6fp_e31YXS82wK0",
@@ -11,12 +18,16 @@ const firebaseConfig = {
   measurementId: "G-W24VGS7LDT"
 };
 
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// Form toggling
+// DOM Elements
 const loginContainer = document.querySelector("#login-container");
 const signupContainer = document.querySelector("#signup-container");
+const logoutContainer = document.querySelector("#logout-container");
+
+// Form toggling
 document.querySelector("#showSignUp").addEventListener("click", () => {
     loginContainer.style.display = "none";
     signupContainer.style.display = "block";
@@ -26,7 +37,7 @@ document.querySelector("#showLogin").addEventListener("click", () => {
     loginContainer.style.display = "block";
 });
 
-// Login
+// Login Functionality
 document.querySelector("#loginBtn").addEventListener("click", () => {
     const email = document.querySelector("#login-email").value;
     const password = document.querySelector("#login-password").value;
@@ -37,12 +48,12 @@ document.querySelector("#loginBtn").addEventListener("click", () => {
             alert("Login successful!");
         })
         .catch((error) => {
-            console.error("Error logging in:", error);
+            console.error("Error logging in:", error.message);
             alert("Login failed: " + error.message);
         });
 });
 
-// Sign-Up
+// Sign-Up Functionality
 document.querySelector("#signupBtn").addEventListener("click", () => {
     const email = document.querySelector("#signup-email").value;
     const password = document.querySelector("#signup-password").value;
@@ -51,17 +62,16 @@ document.querySelector("#signupBtn").addEventListener("click", () => {
         .then((userCredential) => {
             console.log("User signed up:", userCredential.user);
             alert("Sign-up successful! You can now log in.");
-            // Switch to login form
             signupContainer.style.display = "none";
             loginContainer.style.display = "block";
         })
         .catch((error) => {
-            console.error("Error signing up:", error);
+            console.error("Error signing up:", error.message);
             alert("Sign-up failed: " + error.message);
         });
 });
 
-// Logout
+// Logout Functionality
 document.querySelector("#logoutBtn").addEventListener("click", () => {
     signOut(auth)
         .then(() => {
@@ -69,6 +79,21 @@ document.querySelector("#logoutBtn").addEventListener("click", () => {
             alert("Logged out successfully!");
         })
         .catch((error) => {
-            console.error("Error signing out:", error);
+            console.error("Error signing out:", error.message);
         });
+});
+
+// Auth State Listener
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        // User is logged in
+        loginContainer.style.display = "none";
+        signupContainer.style.display = "none";
+        logoutContainer.style.display = "block";
+    } else {
+        // User is logged out
+        loginContainer.style.display = "block";
+        signupContainer.style.display = "none";
+        logoutContainer.style.display = "none";
+    }
 });
