@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Mixing Lab</title>
+    <link rel="stylesheet" href="../assets/styles.css">
+    <style>
+        #lab-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        #tools {
+            display: flex;
+            gap: 10px;
+        }
+        .tool {
+            width: 50px;
+            height: 50px;
+            border: 2px solid black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 12px;
+            color: white;
+            text-transform: capitalize;
+        }
+        .container {
+            width: 50px;
+            height: 50px;
+            border: 2px solid black;
+            background-color: transparent;
+            cursor: pointer;
+            position: relative;
+        }
+        .container::after {
+            content: "Empty";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 12px;
+            color: gray;
+            display: none;
+        }
+        .container.empty::after {
+            display: block;
+        }
+        .selected {
+            outline: 3px solid yellow;
+        }
+        #containers {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            width: 300px;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="navbar"></div> <!-- Add this navbar placeholder -->
+    <h1>Color Mixing Lab</h1>
+    <div id="lab-container">
+        <div id="tools">
+            <div class="tool" data-color="red" style="background-color: red;">Red</div>
+            <div class="tool" data-color="yellow" style="background-color: yellow; color: black;">Yellow</div>
+            <div class="tool" data-color="blue" style="background-color: blue;">Blue</div>
+            <div class="tool" data-color="white" style="background-color: white; color: black;">White</div>
+            <div class="tool" data-color="black" style="background-color: black;">Black</div>
+            <div class="tool" id="trash" style="background-color: gray;">Trash</div>
+            <div class="tool" id="water" style="background-color: lightblue; color: black;">Water</div>
+        </div>
+        <div id="containers">
+            <!-- Generate 10 containers dynamically in script -->
+        </div>
+    </div>
+    <script>
+        const tools = document.querySelectorAll('.tool');
+        const containersDiv = document.getElementById('containers');
+        let selectedTool = null;
+
+        // Create 10 containers dynamically in a 2x5 format
+        for (let i = 0; i < 10; i++) {
+            const container = document.createElement('div');
+            container.classList.add('container', 'empty');
+            container.dataset.colors = JSON.stringify([]);
+            containersDiv.appendChild(container);
+        }
+
+        const containers = document.querySelectorAll('.container');
+
+        tools.forEach(tool => {
+            tool.addEventListener('click', () => {
+                clearSelection();
+                tool.classList.add('selected');
+                selectedTool = tool.id === 'trash' || tool.id === 'water' ? tool.id : tool.dataset.color;
+            });
+        });
+
+        containers.forEach(container => {
+            container.addEventListener('click', () => {
+                if (selectedTool === 'trash') {
+                    container.style.backgroundColor = 'transparent';
+                    container.dataset.colors = JSON.stringify([]);
+                    container.classList.add('empty');
+                } else if (selectedTool === 'water') {
+                    clearSelection();
+                    selectedTool = null;
+                } else if (selectedTool) {
+                    let currentColors = JSON.parse(container.dataset.colors);
+                    
+                    // Check if selectedTool is another container
+                    if (selectedTool.startsWith('container-')) {
+                        const sourceContainer = document.getElementById(selectedTool);
+                        const sourceColors = JSON.parse(sourceContainer.dataset.colors);
+                        currentColors = currentColors.concat(sourceColors);
+                    } else {
+                        currentColors.push(selectedTool);
+                    }
+
+                    const mixedColor = mixColors(currentColors);
+                    container.style.backgroundColor = mixedColor;
+                    container.dataset.colors = JSON.stringify(currentColors);
+                    container.classList.remove('empty');
+                }
+
+                // Set selectedTool to container if clicked
+                if (!selectedTool || selectedTool.startsWith('container-')) {
+                    clearSelection();
+                    container.classList.add('selected');
+                    selectedTool = container.id = `container-${Array.from(containers).indexOf(container)}`;
+                }
+            });
+        });
+
+        function clearSelection() {
+            tools.forEach(tool => tool.classList.remove('selected'));
+            containers.forEach(container => container.classList.remove('selected'));
+        }
+
+        function mixColors(colors) {
+            if (colors.length === 0) return 'transparent';
+
+            const colorMap = {
+                red: [255, 0, 0],
+                yellow: [255, 255, 0],
+                blue: [0, 0, 255],
+                white: [255, 255, 255],
+                black: [0, 0, 0]
+            };
+
+            let total = [0, 0, 0];
+            colors.forEach(color => {
+                const rgb = colorMap[color] || [0, 0, 0];
+                total = total.map((val, idx) => val + rgb[idx]);
+            });
+
+            const mixedRGB = total.map(val => Math.round(val / colors.length));
+
+            return `rgb(${mixedRGB.join(',')})`;
+        }
+    </script>
+</body>
+</html>
